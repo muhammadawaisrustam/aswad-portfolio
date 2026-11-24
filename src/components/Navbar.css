@@ -17,11 +17,22 @@
 .nav.is-scrolled {
   padding-top: 10px;
   padding-bottom: 10px;
-  background: rgba(18, 5, 0, 0.72);
   border-bottom-color: var(--hair-soft);
+}
+/* The blur lives on a pseudo-element: a backdrop-filter on .nav itself would make
+   it the containing block for the fixed mobile sheet and pin the sheet inside the bar. */
+.nav::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: rgba(18, 5, 0, 0.72);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
+  opacity: 0;
+  transition: opacity 0.4s var(--ease-out);
 }
+.nav.is-scrolled::before { opacity: 1; }
 
 .nav__brand {
   display: inline-flex;
@@ -91,8 +102,8 @@
   padding: 18px;
   border: 1px solid var(--hair);
   border-radius: 18px;
-  background: rgba(18, 5, 0, 0.96);
-  backdrop-filter: blur(20px);
+  background: #160500;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6);
   animation: sheet 0.4s var(--ease-out) both;
 }
 .nav__sheet ul { margin: 0 0 14px; padding: 0; list-style: none; display: grid; gap: 2px; }
